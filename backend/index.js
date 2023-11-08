@@ -32,10 +32,11 @@ app.get("/getEmp", (req,res) => {
 })
 
 app.post("/addEmp", upload.single('file'), (req,res) => {
-    const q = "insert into employee (`name`,`mobile`,`role`,`file`) values (?)"
+    const q = "insert into employee (`name`,`mobile`,`password`,`role`,`file`) values (?)"
     const values = [
         req.body.name,
         req.body.mobile,
+        req.body.password,
         req.body.role,
         req.file.buffer
     ];
@@ -57,12 +58,13 @@ app.get("/getEmp/:id", (req, res) => {
 
 app.put("/editEmp/:id", upload.single('file'), (req, res) => {
     const empId = req.params.id;
-    const q = "update employee set `name`= ?, `mobile` = ?, `role` = ?, `file` = ? where id = ?";
+    const q = "update employee set `name`= ?, `mobile` = ?,`password` = ?, `role` = ?, `file` = ? where id = ?";
     const values = [
         req.body.name,
         req.body.mobile,
+        req.body.password,
         req.body.role,
-        req.file ? req.file.path : null,
+        req.file.buffer,
         empId
     ];
 
